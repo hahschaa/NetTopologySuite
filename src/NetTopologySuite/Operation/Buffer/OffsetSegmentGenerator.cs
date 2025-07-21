@@ -19,15 +19,6 @@ namespace NetTopologySuite.Operation.Buffer
     internal class OffsetSegmentGenerator
     {
         /// <summary>
-        /// Factor controlling how close offset segments can be to
-        /// skip adding a fillet or mitre.
-        /// This eliminates very short fillet segments,
-        /// reduces the number of offset curve vertices.
-        /// and improves the robustness of mitre construction.
-        /// </summary>
-        private const double OffsetSegmentSeparationFactor = 0.05;
-
-        /// <summary>
         /// Factor controlling how close curve vertices on inside turns can be to be snapped
         /// </summary>
         private const double InsideTurnVertexSnapDistanceFactor = 1.0E-3;
@@ -266,7 +257,7 @@ namespace NetTopologySuite.Operation.Buffer
              * This also avoids robustness problems with computing mitre corners 
              * for nearly-parallel segments.
              */
-            if (_offset0.P1.Distance(_offset1.P0) < _distance * OffsetSegmentSeparationFactor)
+            if (_offset0.P1.Distance(_offset1.P0) < _distance * _bufParams.OffsetSegmentSeparationFactor)
             {
                 //-- use endpoint of longest segment, to reduce change in area
                 double segLen0 = _s0.Distance(_s1);

@@ -42,6 +42,11 @@ namespace NetTopologySuite.Operation.Buffer
         public const double DefaultMitreLimit = 5.0;
 
         /// <summary>
+        /// The default <see cref="OffsetSegmentSeparationFactor"/>.
+        /// </summary>
+        public const double DefaultOffsetSegmentSeparationFactor = 0.05;
+
+        /// <summary>
         /// The default simplify factor.
         /// Provides an accuracy of about 1%, which matches
         /// the accuracy of the <see cref="DefaultQuadrantSegments"/> parameter.
@@ -53,6 +58,7 @@ namespace NetTopologySuite.Operation.Buffer
         private JoinStyle _joinStyle = JoinStyle.Round;
         private double _mitreLimit = DefaultMitreLimit;
         private double _simplifyFactor = DefaultSimplifyFactor;
+        private double _offsetSegmentSeparationFactor = DefaultOffsetSegmentSeparationFactor;
 
         /// <summary>
         /// Creates a default set of parameters
@@ -182,6 +188,19 @@ namespace NetTopologySuite.Operation.Buffer
         {
             get => _mitreLimit;
             set => _mitreLimit = value;
+        }
+
+        /// <summary>
+        /// Factor controlling how close offset segments can be to
+        /// skip adding a fillet or mitre.
+        /// This eliminates very short fillet segments,
+        /// reduces the number of offset curve vertices.
+        /// and improves the robustness of mitre construction.
+        /// </summary>
+        public double OffsetSegmentSeparationFactor
+        {
+            get => _offsetSegmentSeparationFactor;
+            set => _offsetSegmentSeparationFactor = value;
         }
 
         /// <summary>
